@@ -1,11 +1,12 @@
 %% FREQUENCY THRESHOLD DATA 1
-load data.mat
 close all
 clc
+clearvars
+load data.mat
 X = data1_X;
 c = fft(X)
 plot_amplitude_spectrum(c);
-[X_f,c_new] = filterNoiseFrequencyThreshold(X,0.03);
+[X_f,c_new] = filterNoiseFrequencyThreshold(X,50);
 figure
 plot_amplitude_spectrum(c_new);
 figure
@@ -15,6 +16,29 @@ plot(data1_f)
 hold off
 
 1/1000^2*sum((abs(c)-abs(c_new)).^2)
+
+
+
+
+%% FREQUENCY THRESHOLD DATA 2
+close all
+clc
+clearvars
+load data.mat
+X = data2_X;
+c = fft(X)
+plot_amplitude_spectrum(c);
+[X_f,c_new] = filterNoiseFrequencyThreshold(X,6);
+figure
+plot_amplitude_spectrum(c_new);
+figure
+plot(X_f)
+hold on
+plot(data2_f)
+hold off
+
+1/1000^2*sum((abs(c)-abs(c_new)).^2)
+
 
 %% AMPLITUDE DATA 1
 close all
