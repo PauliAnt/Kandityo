@@ -1,4 +1,4 @@
-function [X_f,c,c_new] = filterNoiseCut(X,cutoff)
+function [X_f,c_new] = filterNoiseFrequencyThreshold(X,cutoff)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
