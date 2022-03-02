@@ -1,5 +1,5 @@
 function [X_f,c] = filterNoiseScale(X,gamma)
-cauchy = @(x) gamma^2./(x.^2+gamma^2)
+cauchy = @(x) gamma^2./(x.^2+gamma^2);
 c = fftshift(fft(X));
 omega = linspace(-1,1,length(c));
 c = cauchy(omega).*c;

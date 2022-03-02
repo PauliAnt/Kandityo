@@ -3,7 +3,7 @@ function [X_f,c_new] = filterNoiseFrequencyThreshold(X,N)
 %   Detailed explanation goes here
 
 c = fftshift(fft(X));
-x_m = ceil((length(c)+1)/2)
+x_m = ceil((length(c)+1)/2);
 c_new = zeros(size(c));
 c_new(x_m-N:x_m+N) = c(x_m-N:x_m+N);
 X_f = ifft(ifftshift(c_new));
