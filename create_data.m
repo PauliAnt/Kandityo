@@ -1,7 +1,7 @@
 close all
 rng(222)
 fontsize = 17
-
+tick_size = 12
 %% DATASET 1
 %close all
 N1 = 1000
@@ -10,6 +10,8 @@ omega1 = 19
 omega2 = 29
 f = 1/3*sin(omega1*2*pi*t)+1/2*cos(omega2*2*pi*t)
 h1 = plot(t,f)
+ax = gca;
+ax.FontSize = tick_size;
 xlabel("t($$s$$)","Interpreter","latex","FontSize",fontsize)
 ylabel("Amplitude","Interpreter","latex","FontSize",fontsize)
 
@@ -21,8 +23,11 @@ e = randn(1,N1);
 X = f+e;
 figure
 h3 = plot(t,X);
+ax = gca;
+ax.FontSize = tick_size;
 xlabel("$$t(s)$$","Interpreter","latex","FontSize",fontsize)
 ylabel("Amplitude","Interpreter","latex","FontSize",fontsize)
+
 figure
 [c,omega] = plot_amplitude_spectrum(fft(X),1000)
 data1_X = X;
@@ -35,8 +40,11 @@ N2 = 1000
 t = linspace(0,1,N2);
 f = -70*t.^4+120*t.^3-60*t.^2+12*t;
 plot(t,f)
+ax = gca;
+ax.FontSize = tick_size;
 xlabel("$$t(s)$$","Interpreter","latex","FontSize",fontsize)
 ylabel("Amplitude","Interpreter","latex","FontSize",fontsize)
+
 figure
 [c,omega]=plot_amplitude_spectrum(fft(f),1000);
 plot(omega,c)
@@ -46,8 +54,11 @@ e = randn(1,N2);
 X = f+e;
 figure
 h3 = plot(t,X);
+ax = gca;
+ax.FontSize = tick_size;
 xlabel("$$t(s)$$","Interpreter","latex","FontSize",fontsize)
 ylabel("Amplitude","Interpreter","latex","FontSize",fontsize)
+
 figure
 [c,omega] = plot_amplitude_spectrum(fft(X),1000,true);
 h4 = plot(omega,c);
