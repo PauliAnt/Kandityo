@@ -37,6 +37,22 @@ ylabel("$$|\hat{f}(\omega)|$$","Interpreter","latex","FontSize",fontsize)
 %% WHITE NOISE SPECTRUM
 
 
+%% Decay
+close all
+C = 100
+p = 2
+
+f = @(x) C*abs(x).^-p 
+x = [0:500]
+
+plot(x,f(x))
+ylim([0,1])
+xlim([0,500])
+ax = gca;
+ax.FontSize = tick_size;
+xlabel("$$\omega$$","Interpreter","latex","FontSize",fontsize)
+ylabel("$$|\hat{f}(\omega)|$$","Interpreter","latex","FontSize",fontsize)
+
 
 %% SIN AND COS 
 close all
