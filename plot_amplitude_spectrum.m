@@ -1,9 +1,10 @@
-function [c_norm,omega] = plot_fourier_components(c,Fs,flag)
+function [c_norm,omega] = plot_fourier_components(c,Fs,padding,flag)
 %PLOT_FOURIER_COMPONENTS Summary of this function goes here
 %   Detailed explanation goes here
 if ~exist('Fs','var')
     Fs = 1;
 end
+    
 if ~exist('flag','var')
     flag = 0;
 end

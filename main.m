@@ -4,9 +4,11 @@ clc
 clearvars
 load data.mat
 X = data1_X;
-c = fft(X)
+L = length(X);
+c = fft(X,2*L);
+c_orig = fft(data1_f,2*L)
 plot_amplitude_spectrum(c);
-[X_f,c_new] = filterNoiseFrequencyThreshold(X,50);
+[X_f,c_new] = filterNoiseFrequencyThreshold(X,58);
 
 figure
 plot_amplitude_spectrum(c_new);
@@ -16,9 +18,9 @@ hold on
 plot(data1_f)
 hold off
 
-1/1000^2*sum((abs(c)-abs(c_new))).^2
-
-
+var = 1/2*1/1000^2*sum((abs(c)-abs(c_new)).^2)
+diff = 1/2*1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
+1-var
 
 
 %% FREQUENCY THRESHOLD DATA 2
@@ -29,7 +31,9 @@ load data.mat
 fontsize = 18;
 tick_size = 12;
 X = data2_X;
-c = fft(X);
+L = length(X)
+c = fft(X,2*L);
+c_orig = fft(data2_f,2*L)
 plot_amplitude_spectrum(c,1000);
 hold on
 plot([7,7],[0,2],'r','LineWidth',2)
@@ -38,7 +42,7 @@ ax.FontSize = tick_size;
 xlabel("$$\omega$$(Hz)","interpreter","latex","FontSize",fontsize)
 ylabel("$$|\hat{f}(\omega)|$$","Interpreter","latex","FontSize",fontsize)
 hold off
-[X_f,c_new] = filterNoiseFrequencyThreshold(X,6);
+[X_f,c_new] = filterNoiseFrequencyThreshold(X,13);
 figure
 plot_amplitude_spectrum(c_new);
 figure
@@ -52,7 +56,6 @@ ax.FontSize = tick_size;
 xlabel("$$t(s)$$","Interpreter","latex","FontSize",fontsize)
 ylabel("Amplitude","Interpreter","latex","FontSize",fontsize)
 
-figure
 
 figure
 plot(t,X)
@@ -66,7 +69,8 @@ ylabel("Amplitude","Interpreter","latex","FontSize",fontsize)
 
 
 
-1/1000^2*sum((abs(c)-abs(c_new)).^2)
+d1 = 1/2*1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
+var1 = 1/2*1/1000^2*sum((abs(c)-abs(c_new)).^2)
 
 
 %% AMPLITUDE DATA 1
@@ -80,6 +84,7 @@ fontsize = 18
 tick_size = 12
 % DATA 1
 X = data1_X;
+L = length(X);
 t = data1_t
 c = fft(X);
 plot_amplitude_spectrum(c,1000);
@@ -91,7 +96,7 @@ ylabel("$$|\hat{f}(\omega)|$$","Interpreter","latex","FontSize",fontsize)
 hold on 
 plot([0,500],[0.20,0.20],'r','LineWidth',2)
 hold off
-[X_f,c_new] = filterNoiseAmplitudeThreshold(X,0.4);
+[X_f,c_new] = filterNoiseAmplitudeThreshold(X,0.2);
 figure
 plot_amplitude_spectrum(c_new);
 figure
@@ -120,8 +125,8 @@ ylabel("Amplitude","Interpreter","latex","FontSize",fontsize)
 
 
 c_orig = fft(data1_f);
-d1 = 1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
-var1 = 1/1000^2*sum((abs(c)-abs(c_new)).^2)
+d1 = 1/2*1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
+var1 = 1/2*1/1000^2*sum((abs(c)-abs(c_new)).^2)
 
 %% AMPLITUDE DATA 2
 close all
@@ -130,10 +135,11 @@ clearvars
 load data.mat
 
 X = data2_X;
-t = data2_t
-c = fft(X);
+L = length(X);
+t = data2_t;
+c = fft(X,2*L);
 plot_amplitude_spectrum(c);
-[X_f,c_new] = filterNoiseAmplitudeThreshold(X,0.043)
+[X_f,c_new] = filterNoiseAmplitudeThresholdPadding(X,0.18)  
 figure
 plot_amplitude_spectrum(c_new);
 figure
@@ -142,9 +148,9 @@ hold on
 plot(data2_f)
 hold off
 
-c_orig = fft(data2_f);
-d2 = 1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
-var2 = 1/1000^2*sum((abs(c)-abs(c_new)).^2)
+c_orig = fft(data2_f,2*L);
+d2 = 1/2*1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
+var2 = 1/2*1/1000^2*sum((abs(c)-abs(c_new)).^2)
 
 %% SCALE COEFICIENTS data 2
 
@@ -157,10 +163,11 @@ fontsize = 18;
 tick_size = 12;
 
 X = data2_X;
+L = length(X);
 t = data2_t
-c = fft(X);
+c = fft(X,2*L);
 plot_amplitude_spectrum(c);
-[X_f,c_new] = filterNoiseScale(X,0.011);
+[X_f,c_new] = filterNoiseScale(X,0.015);
 figure
 plot_amplitude_spectrum(c_new);
 figure
@@ -184,9 +191,9 @@ ax.FontSize = tick_size;
 xlabel("$$t(s)$$","Interpreter","latex","FontSize",fontsize)
 ylabel("Amplitude","Interpreter","latex","FontSize",fontsize)
 
-c_orig = fft(data2_f);
-d2 = 1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
-var2 = 1/1000^2*sum((abs(c)-abs(c_new)).^2)
+c_orig = fft(data2_f,2*L);
+d2 = 1/2*1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
+var2 = 1/2*1/1000^2*sum((abs(c)-abs(c_new)).^2)
 
 
 %% SCALE COEFICIENTS data 1
@@ -197,10 +204,12 @@ clearvars
 load data.mat
 
 X = data1_X;
+L = length(X);
 t = data1_t
-c = fft(X);
+c = fft(X,2*L);
+c_orig = fft(data1_f,2*L)
 plot_amplitude_spectrum(c);
-[X_f,c_new] = filterNoiseScale(X,0.075);
+[X_f,c_new] = filterNoiseScale(X,0.08);
 figure
 plot_amplitude_spectrum(c_new);
 figure
@@ -209,9 +218,9 @@ hold on
 plot(data1_f)
 hold off
 
-c_orig = fft(data1_f);
-d2 = 1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
-var2 = 1/1000^2*sum((abs(c)-abs(c_new)).^2)
+d2 = 1/2*1/1000^2*sum((abs(c_orig)-abs(c_new)).^2)
+var2 = 1/2*1/1000^2*sum((abs(c)-abs(c_new)).^2)
+1-var2
 
 
 
