@@ -46,9 +46,9 @@ c_orig = fft(data2_f,2*L);
 
 eT = [];
 diff = [];
-N = [1:100]
-for ii = N
-   [X_f,c_new] = filterNoiseFrequencyThreshold(X,ii);
+N = [5:100]
+for ii = [1:length(N)]
+   [X_f,c_new] = filterNoiseFrequencyThreshold(X,N(ii));
    eT(ii) = 1/2*1/1000^2*sum((abs(c)-abs(c_new)).^2);
    diff(ii) = 1/2*1/1000^2*sum((abs(c_orig)-abs(c_new)).^2);
 end

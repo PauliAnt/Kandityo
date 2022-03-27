@@ -36,7 +36,7 @@ c = fft(X,2*L);
 c_orig = fft(data2_f,2*L)
 plot_amplitude_spectrum(c,1000);
 hold on
-plot([7,7],[0,2],'r','LineWidth',2)
+plot([7.5,7.5],[0,2],'r','LineWidth',2)
 ax = gca;
 ax.FontSize = tick_size;
 xlabel("$$\omega$$(Hz)","interpreter","latex","FontSize",fontsize)
@@ -167,7 +167,7 @@ L = length(X);
 t = data2_t
 c = fft(X,2*L);
 plot_amplitude_spectrum(c);
-[X_f,c_new] = filterNoiseScale(X,0.015);
+[X_f,c_new] = filterNoiseScale(X,0.01);
 figure
 plot_amplitude_spectrum(c_new);
 figure

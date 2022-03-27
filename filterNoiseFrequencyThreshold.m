@@ -1,8 +1,11 @@
-function [X_f,c_new] = filterNoiseFrequencyThreshold(X,N)
+function [X_f,c_new] = filterNoiseFrequencyThreshold(X,N,pad)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 L = length(X)
-pad = 2*L
+if ~exist('pad','var')
+    pad = 2*L
+end
+
 
 c = fftshift(fft(X,pad));
 x_m = ceil((length(c)+1)/2);

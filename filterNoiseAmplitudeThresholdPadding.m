@@ -1,7 +1,10 @@
-function [X_f,c] = filterNoiseAmplitudeThresholdPadding(X,level)
+function [X_f,c] = filterNoiseAmplitudeThresholdPadding(X,level,pad)
 %FILTERNOISE_TRESHOLD Summary of this function goes here
 %   Detailed explanation goes here
-L = length(X);
+L = length(X)
+if ~exist('pad','var')
+    pad = 2*L
+end
 c = fft(X,2*L);
 threshold = level*L/2;
 c(abs(c)<threshold) = 0;

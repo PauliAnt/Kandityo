@@ -5,8 +5,19 @@ clearvars
 clc
 
 data = readmatrix("IBM.csv");
-X = data(:,2)
-save IBM.mat X
+X = data(1:end-1,2)
+t = [1:length(X)]
+% padding
+padsize = round(length(X)/2)
+X = [ones([padsize,1])*X(1);X;ones([padsize,1])*X(end)]
+
+save IBM.mat X t
+
+
+
+
+
+
 
 %%
 close all
@@ -19,13 +30,17 @@ dpurp = "#540073";
 
 load IBM
 
-t = [1:length(X)]
+padsize = round(length(t)/2)
+
+
+
+L = length(X)
 
 figure(1)
-h=plot(t,X)
-[X_F,c_new] = filterNoiseAmplitudeThreshold(X,0.8);
+h=plot(t,X(padsize+1:end-padsize))
+[X_F,c_new] = filterNoiseAmplitudeThreshold(X,0.3);
 hold on
-plot(t,X_F,'LineWidth',1)
+plot(t,X_F(padsize+1:end-padsize),'LineWidth',1)
 hold off
 figure
 c = fft(X)
@@ -38,15 +53,15 @@ ylabel("$$|\hat{f}(\omega)|$$","Interpreter","latex","FontSize",fontsize)
 
 
 % Frequency cut off
-X_F = filterNoiseFrequencyThreshold(X,10);
+X_F = filterNoiseFrequencyThreshold(X,30,L);
 figure(1)
 hold on
-plot(t,X_F,'Color',olive,'LineWidth',1)
+plot(t,X_F(padsize+1:end-padsize),'Color',olive,'LineWidth',1)
 
 % lowpass
 
-X_F = filterNoiseScale(X',0.015);
-plot(t,X_F,'Color',dpurp,'LineWidth',1)
+X_F = filterNoiseScale(X',0.015,L);
+plot(t,X_F(padsize+1:end-padsize),'Color',dpurp,'LineWidth',1)
 hold off
 ax = gca;
 ax.FontSize = tick_size;
